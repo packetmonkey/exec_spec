@@ -291,11 +291,15 @@ fn render(spec: &Spec) {
             println!("{}", note);
         }
 
-        for technical_requirement in spec.find_technical_requirements_for(requirement.id) {
+        let technical_requirements = spec.find_technical_requirements_for(requirement.id);
+        if technical_requirements.len() > 0 {
             println!("{} Technical Requirements", "#".repeat(markdown_level + 1));
+        }
+
+        for technical_requirement in technical_requirements {
             println!("{}", technical_requirement.description);
             println!(
-                "Author: {}",
+                "Author: {}\n",
                 spec.find_contact(technical_requirement.author_id)
             );
         }
