@@ -46,6 +46,8 @@ struct TechnicalRequirement {
     requirement_id: String,
     author_id: u8,
     description: String,
+    code_url: Option<String>,
+    test_url: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
