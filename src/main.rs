@@ -161,63 +161,93 @@ fn main() {
     };
 
     let terms_path = args.spec_path.join("terms");
-    for entry in std::fs::read_dir(terms_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(path).unwrap();
-        let term: Term = toml::from_str(&content).unwrap();
+    match std::fs::read_dir(terms_path) {
+        Ok(entries) => {
+            for entry in entries {
+                let entry = entry.unwrap();
+                let path = entry.path();
+                let content = std::fs::read_to_string(path).unwrap();
+                let term: Term = toml::from_str(&content).unwrap();
 
-        spec.add_term(term);
+                spec.add_term(term);
+            }
+        }
+        Err(_) => println!("No terms directory found"),
     }
 
     let contacts_path = args.spec_path.join("contacts");
-    for entry in std::fs::read_dir(contacts_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(path).unwrap();
-        let contact: Contact = toml::from_str(&content).unwrap();
+    match std::fs::read_dir(contacts_path) {
+        Ok(entries) => {
+            for entry in entries {
+                let entry = entry.unwrap();
+                let path = entry.path();
+                let content = std::fs::read_to_string(path).unwrap();
+                let contact: Contact = toml::from_str(&content).unwrap();
 
-        spec.add_contact(contact);
+                spec.add_contact(contact);
+            }
+        }
+        Err(_) => println!("No contacts directory found"),
     }
 
     let technical_requirements_path = args.spec_path.join("technical_requirements");
-    for entry in std::fs::read_dir(technical_requirements_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(path).unwrap();
-        let technical_requirement: TechnicalRequirement = toml::from_str(&content).unwrap();
+    match std::fs::read_dir(technical_requirements_path) {
+        Ok(entries) => {
+            for entry in entries {
+                let entry = entry.unwrap();
+                let path = entry.path();
+                let content = std::fs::read_to_string(path).unwrap();
+                let technical_requirement: TechnicalRequirement = toml::from_str(&content).unwrap();
 
-        spec.add_technical_requirement(technical_requirement);
+                spec.add_technical_requirement(technical_requirement);
+            }
+        }
+        Err(_) => println!("No technical_requirements directory found"),
     }
 
     let known_gaps_path = args.spec_path.join("known_gaps");
-    for entry in std::fs::read_dir(known_gaps_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(path).unwrap();
-        let known_gap: KnownGap = toml::from_str(&content).unwrap();
+    match std::fs::read_dir(known_gaps_path) {
+        Ok(entries) => {
+            for entry in entries {
+                let entry = entry.unwrap();
+                let path = entry.path();
+                let content = std::fs::read_to_string(path).unwrap();
+                let known_gap: KnownGap = toml::from_str(&content).unwrap();
 
-        spec.add_known_gap(known_gap);
+                spec.add_known_gap(known_gap);
+            }
+        }
+        Err(_) => println!("No known_gaps directory found"),
     }
 
     let personas_path = args.spec_path.join("personas");
-    for entry in std::fs::read_dir(personas_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(path).unwrap();
-        let persona: Persona = toml::from_str(&content).unwrap();
+    match std::fs::read_dir(personas_path) {
+        Ok(entries) => {
+            for entry in entries {
+                let entry = entry.unwrap();
+                let path = entry.path();
+                let content = std::fs::read_to_string(path).unwrap();
+                let persona: Persona = toml::from_str(&content).unwrap();
 
-        spec.add_persona(persona);
+                spec.add_persona(persona);
+            }
+        }
+        Err(_) => println!("No personas directory found"),
     }
 
     let business_requirements_path = args.spec_path.join("business_requirements");
-    for entry in std::fs::read_dir(business_requirements_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(path).unwrap();
-        let requirement: BusinessRequirement = toml::from_str(&content).unwrap();
+    match std::fs::read_dir(business_requirements_path) {
+        Ok(entries) => {
+            for entry in entries {
+                let entry = entry.unwrap();
+                let path = entry.path();
+                let content = std::fs::read_to_string(path).unwrap();
+                let requirement: BusinessRequirement = toml::from_str(&content).unwrap();
 
-        spec.add_requirement(requirement);
+                spec.add_requirement(requirement);
+            }
+        }
+        Err(_) => println!("No business_requirements directory found"),
     }
 
     let sla_path = args.spec_path.join("sla").join("sla.md");
