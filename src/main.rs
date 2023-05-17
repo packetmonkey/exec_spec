@@ -4,11 +4,13 @@ use clap::{Parser, ValueEnum};
 use itertools::Itertools;
 use serde::Deserialize;
 
-#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum, Debug)]
+#[derive(Parser, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum, Debug)]
 enum ArgCommand {
     Render,
     Stat,
+    ListContacts,
 }
+
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
@@ -23,7 +25,7 @@ struct Term {
     definition: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 struct Contact {
     id: u8,
     name: String,
@@ -222,6 +224,21 @@ fn main() {
     match args.command {
         ArgCommand::Render => render(&spec),
         ArgCommand::Stat => stat(&spec),
+        ArgCommand::ListContacts => list_contacts(&spec),
+    }
+}
+
+fn list_contacts(spec: &Spec) {
+    let mut sorted_contacts = spec.contacts.clone();
+    sorted_contacts.sort_by(|a, b| a.id.partial_cmp(&b.id).unwrap());
+
+    for contact in sorted_contacts {
+        println!(
+            "{}: {} ({})",
+            contact.id,
+            contact.name,
+            contact.email.unwrap_or_default()
+        );
     }
 }
 
@@ -333,5 +350,7 @@ fn render(spec: &Spec) {
             let contact_id = contact_id.as_integer().unwrap() as u8;
             println!("- {}", spec.find_contact(contact_id as u8));
         }
+
+        println!("");
     }
 }
