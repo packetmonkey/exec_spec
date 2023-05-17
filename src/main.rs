@@ -44,7 +44,7 @@ impl std::fmt::Display for Contact {
 #[derive(Deserialize, Debug)]
 struct TechnicalRequirement {
     requirement_id: String,
-    author_id: u8,
+    author_id: Option<u8>,
     description: String,
     code_url: Option<String>,
     test_url: Option<String>,
@@ -69,7 +69,7 @@ struct BusinessRequirement {
     name: String,
     date: toml::value::Datetime,
     note: Option<String>,
-    owner_id: u8,
+    owner_id: Option<u8>,
 }
 
 impl BusinessRequirement {
@@ -317,10 +317,20 @@ fn render(spec: &Spec) {
 
         for technical_requirement in technical_requirements {
             println!("{}", technical_requirement.description);
-            println!(
-                "Author: {}\n",
-                spec.find_contact(technical_requirement.author_id)
-            );
+
+            if let Some(author_id) = &technical_requirement.author_id {
+                println!("Author: {}", spec.find_contact(*author_id));
+            }
+
+            if let Some(url) = &technical_requirement.code_url {
+                println!("[Code]({})", url);
+            }
+
+            if let Some(url) = &technical_requirement.test_url {
+                println!("[Tests]({})", url);
+            }
+
+            println!("");
         }
     }
     println!("## SLA");
