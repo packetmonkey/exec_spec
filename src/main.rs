@@ -42,6 +42,7 @@ fn main() {
     }
 }
 
+// Foo bar baz This is just a test to see if the fancy comments, work and They do.
 fn list_contacts(spec: &Spec) {
     let name_length = spec
         .contacts
@@ -92,9 +93,9 @@ fn stat(spec: &Spec) {
 
 fn render(spec: &Spec) {
     println!("# Specification");
-    println!("Version: {}", spec.meta.version);
-    println!("Date: {}", spec.meta.date);
-    println!("Owner: {}", spec.find_contact(spec.meta.owner_id));
+    println!("Version: {}\n", spec.meta.version);
+    println!("Date: {}\n", spec.meta.date);
+    println!("Owner: {}\n", spec.find_contact(spec.meta.owner_id));
     println!();
     println!("## Description");
     println!("{}", spec.meta.description);
@@ -131,15 +132,15 @@ fn render(spec: &Spec) {
 
         if let Some(date) = &requirement.date {
             let date = date.date.unwrap();
-            println!("Date: {}-{}-{}", date.year, date.month, date.day)
+            println!("Date: {}-{}-{}\n", date.year, date.month, date.day)
         }
 
         if let Some(owner_id) = &requirement.owner_id {
-            println!("Owner: {}", spec.find_contact(*owner_id));
+            println!("Owner: {}\n", spec.find_contact(*owner_id));
         }
 
         if let Some(persona_id) = &requirement.persona_id {
-            println!("Persona: {}", spec.find_persona(*persona_id).name);
+            println!("Persona: {}\n", spec.find_persona(*persona_id).name);
         }
 
         if let Some(note) = &requirement.note {
@@ -152,18 +153,18 @@ fn render(spec: &Spec) {
             println!("{} Technical Requirements", "#".repeat(markdown_level + 1));
 
             for technical_requirement in technical_requirements {
-                println!("{}", technical_requirement.description);
+                println!("{}\n", technical_requirement.description);
 
                 if let Some(author_id) = &technical_requirement.author_id {
-                    println!("Author: {}", spec.find_contact(*author_id));
+                    println!("Author: {}\n", spec.find_contact(*author_id));
                 }
 
                 if let Some(url) = &technical_requirement.code_url {
-                    println!("[Code]({})", url);
+                    println!("[Code]({})\n", url);
                 }
 
                 if let Some(url) = &technical_requirement.test_url {
-                    println!("[Tests]({})", url);
+                    println!("[Tests]({})\n", url);
                 }
 
                 println!();

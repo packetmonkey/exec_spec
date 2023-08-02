@@ -60,7 +60,7 @@ impl From<std::string::String> for BusinessRequirementId {
 
 impl std::fmt::Display for BusinessRequirementId {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        let str = self.0.iter().join(",");
+        let str = self.0.iter().join(".");
         write!(f, "{}", str)
     }
 }
